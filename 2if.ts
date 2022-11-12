@@ -14,11 +14,13 @@ interface ComponentInstance {
   definition: ComponentDefinition;
   element: Element;
   originalInnerHTML?: string;
+  inputs?: any[];
+  privates?: any[];
 }
 
 // static data /////////////////////////////////
 
-const innerHtmlRegex = new RegExp(`{innerHTML}`, "g");
+const innerHtmlRegex = new RegExp("{innerHTML}", "g");
 const loadingComponents = new Map<TagName, Promise<Component>>();
 const loadedComponents = new Map<TagName, ComponentDefinition>();
 export const wait = (milliseconds?: number) => new Promise(r => setTimeout(r, milliseconds));
@@ -26,19 +28,16 @@ export const wait = (milliseconds?: number) => new Promise(r => setTimeout(r, mi
 // initialization /////////////////////////////////////////////////
 
 async function fetchModule(tag: TagName): Promise<Component> {
-  const exported = await import(`./components/${tag}.js`).catch(_ => undefined);
-  if (!exported || !exported.default) console.error(`${tag}.js should have a default export function`);
-  return exported.default || (() => "");
-}
-
-async function load(tag: TagName) {
-  const promiseOfModule = fetchModule(tag);
+  const promiseOfModule = import(`./components/${tag}.js`).catch(_ => undefined);
   loadingComponents.set(tag, promiseOfModule);
-  return promiseOfModule;
+  const module = await promiseOfModule;
+  if (module && module.default) return module.default as Component;
+  console.error(`${tag}.js should have a default export function`);
+  return (() => "") as Component;
 }
 
 async function loadComponent(tagName: TagName): Promise<ComponentDefinition> {
-  const promiseOfClosure = loadingComponents.get(tagName) || load(tagName);
+  const promiseOfClosure = loadingComponents.get(tagName) || fetchModule(tagName);
   const closure = await promiseOfClosure;
   const definition: ComponentDefinition = { closure };
   loadedComponents.set(tagName, definition);
@@ -65,13 +64,13 @@ function instantiateComponent(element: Element, definition: ComponentDefinition)
   return componentInstance;
 }
 
-function render(component: ComponentInstance): void {
-  const inputs: any[] = [];
-  const privateInputs: any[] = [];
-  let html = component.definition.closure(inputs, privateInputs);
-  if (component.originalInnerHTML) html = html.replace(innerHtmlRegex, component.originalInnerHTML);
-  component.element.innerHTML = html;
+function render(instance: ComponentInstance): void {
+  let html = instance.definition.closure(instance.inputs, instance.privates);
+  if (instance.originalInnerHTML) html = html.replace(innerHtmlRegex, instance.originalInnerHTML);
+  instance.element.innerHTML = html;
 }
+
+// build component tree ///
 
 async function scan(element: Element): Promise<ComponentInstance | undefined> {
   const tagName = element.tagName;
@@ -96,14 +95,4 @@ function scanChildren(element: Element) {
 
 // go ///////////
 
-interface ComponentInstanceTree {
-  instance: ComponentInstance;
-  inputs: any[];
-  privates: any[];
-}
-
-let portals: ComponentInstanceTree[] = [];
-wait().then(_ => {
-  portals = Array.from(document.getElementsByTagName("2f"));
-  return portals.map(scan);
-});
+wait().then(_ => Array.from(document.getElementsByTagName("2f")).map(scan));
