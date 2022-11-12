@@ -27,11 +27,11 @@ export default function () {
 
   const onClickopen = () => (title = "onclickOpen") && console.log(title);
 
-  return `<ul class="back">
-    <li onclick="parentNode.parentNode.controller.open(1,event,this)">menu item 1 - {hello(4, "world")}</li>
-    <li onclick2(2)>menu item 2 - click me and inspect console</li>
-    <li onclickopen>menu item 3: {title}</li>
-    <li onClickMe>Test the onClick handler</li>
+  return <><ul className="back">
+    <li onClick={event=>open(1, event, this)}>menu item 1 - {hello(4, "world")}</li>
+    <li onclick2="(2)">menu item 2 - click me and inspect console</li>
+    <li onClick={onclickopen}>menu item 3: {title}</li>
+    <li onClick={onClickMe}>Test the onClick handler</li>
     <li>{hello(5, "world")}</li>
 </ul>
 <style>
@@ -42,6 +42,6 @@ export default function () {
 li[onClick]:hover {
   text-decoration: underline;
 }
-</style>
-`;
+</style></>  
+;
 }

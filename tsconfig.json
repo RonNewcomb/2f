@@ -10,12 +10,15 @@
     "alwaysStrict": false,
     "allowJs": false,
     //"allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "tsx-dom",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
+    "outDir": "./.build",
     "suppressImplicitAnyIndexErrors": false,
     "strictNullChecks": true,
     "strictBindCallApply": true,
@@ -24,7 +27,11 @@
   },
   "compileOnSave": true,
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "components/inner.tsx",
+    "components/my-app.tsx",
+    "components/navbar.tsx",
+    "components/veggie-form.tsx"
   ],
   "exclude": [
     "node_modules"

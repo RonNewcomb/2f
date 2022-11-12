@@ -60,7 +60,6 @@ async function loadAndInstantiateComponent(element: Element): Promise<ComponentI
 
 function instantiateComponent(element: Element, definition: ComponentDefinition): ComponentInstance {
   const componentInstance: ComponentInstance = { definition, element };
-  element.componentInstance = componentInstance; // backlink for re-render
   componentInstance.originalInnerHTML = element.innerHTML;
   render(componentInstance);
   return componentInstance;
@@ -74,14 +73,20 @@ function render(component: ComponentInstance): void {
   component.element.innerHTML = html;
 }
 
-async function scan(element: Element): Promise<any> {
+async function scan(element: Element): Promise<ComponentInstance | undefined> {
   const tagName = element.tagName;
+  let instance: ComponentInstance | undefined = undefined;
   if (tagName.includes("-")) {
     const loadedDefinition = isComponentLoaded(tagName);
-    if (!loadedDefinition) return loadAndInstantiateComponent(element).then(_componentInstance => scanChildren(element));
-    instantiateComponent(element, loadedDefinition);
+    if (!loadedDefinition)
+      return loadAndInstantiateComponent(element).then(componentInstance => {
+        scanChildren(element);
+        return componentInstance;
+      });
+    instance = instantiateComponent(element, loadedDefinition);
   }
   scanChildren(element);
+  return instance;
 }
 
 function scanChildren(element: Element) {
@@ -91,7 +96,13 @@ function scanChildren(element: Element) {
 
 // go ///////////
 
-let portals: Element[] = [];
+interface ComponentInstanceTree {
+  instance: ComponentInstance;
+  inputs: any[];
+  privates: any[];
+}
+
+let portals: ComponentInstanceTree[] = [];
 wait().then(_ => {
   portals = Array.from(document.getElementsByTagName("2f"));
   return portals.map(scan);
