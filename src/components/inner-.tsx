@@ -1,4 +1,4 @@
-import SomeService from "../services/SomeService.js"; // browser loads this without help if the .js extension is specified
+import SomeService from "../services/SomeService"; // browser loads this without help if the .js extension is specified
 
 SomeService.printer();
 

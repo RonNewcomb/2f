@@ -5,9 +5,10 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "serve": "tsc --project tsconfig.server.json && node server.cjs"
+    "serve": "cd server && tsc --project tsconfig.server.json && node server.cjs"
   },
   "dependencies": {
+    "rollup": "^3.3.0",
     "tsx-dom": "^2.0.0"
   },
   "devDependencies": {
