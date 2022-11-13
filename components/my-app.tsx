@@ -1,6 +1,6 @@
 import Navbar from "./navbar";
-import 'veggie-form' from './veggie-form';
- 
+import VeggieForm from "./veggie-form";
+import { h } from "tsx-dom";
 
 export default function () {
   return (
@@ -8,7 +8,7 @@ export default function () {
       <b>this is my app. </b>
       <Navbar />
       {innerHTML}
-      <veggie-form />
+      <VeggieForm />
     </>
   );
 }

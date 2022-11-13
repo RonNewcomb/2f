@@ -28,11 +28,11 @@ export const wait = (milliseconds?: number) => new Promise(r => setTimeout(r, mi
 // initialization /////////////////////////////////////////////////
 
 async function fetchModule(tag: TagName): Promise<Component> {
-  const promiseOfModule = import(`./components/${tag}.js`).catch(_ => undefined);
+  const promiseOfModule = import(`./components/${tag}.js`).catch(console.error);
   loadingComponents.set(tag, promiseOfModule);
   const module = await promiseOfModule;
   if (module && module.default) return module.default as Component;
-  console.error(`${tag}.js should have a default export function`);
+  console.error({ [tag as string]: module, error: `${tag}.js should have a default export function` });
   return (() => "") as Component;
 }
 
@@ -97,4 +97,4 @@ function scanChildren(element: Element) {
 
 console.log("2if bootstrapping");
 
-wait().then(_ => Array.from(document.getElementsByTagName("2f")).map(scan));
+wait().then(_ => Array.from(document.getElementsByTagName("f12")).map(scan));

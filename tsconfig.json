@@ -26,11 +26,12 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
+    "watch": true
   },
   "compileOnSave": true,
   "include": [
     "**/*.ts",
-    "components/inner.tsx",
+    "components/inner-.tsx",
     "components/my-app.tsx",
     "components/navbar.tsx",
     "components/veggie-form.tsx",
