@@ -31,10 +31,10 @@
   "compileOnSave": true,
   "include": [
     "**/*.ts",
-    "components/inner-.tsx",
-    "components/my-app.tsx",
-    "components/navbar.tsx",
-    "components/veggie-form.tsx",
+    "src/components/inner-.tsx",
+    "src/components/my-app.tsx",
+    "src/components/navbar.tsx",
+    "src/components/veggie-form.tsx",
   ],
   "exclude": [
     "server.mts",

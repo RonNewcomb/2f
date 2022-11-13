@@ -1,4 +1,4 @@
-import type { EventHandler } from "uif";
+import type { EventHandler } from "src/uif";
 
 export default function () {
   let title: string = "I'm a member of a navbar class";
