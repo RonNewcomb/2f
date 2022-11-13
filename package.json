@@ -4,13 +4,16 @@
   "description": "A toy UI framework",
   "private": true,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "serve": "node server.js",
+    "servets": "tsc servercopy.ts &&  node servercopy.js"
   },
   "devDependencies": {
     "typescript": "^4.8.4",
     "tsx-dom-types": "^1.0.0"
   },
   "dependencies": {
+    "@types/node": "^18.11.9",
     "tsx-dom": "^2.0.0"
   }
 }
