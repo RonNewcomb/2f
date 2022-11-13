@@ -95,4 +95,6 @@ function scanChildren(element: Element) {
 
 // go ///////////
 
+console.log("2if bootstrapping");
+
 wait().then(_ => Array.from(document.getElementsByTagName("2f")).map(scan));

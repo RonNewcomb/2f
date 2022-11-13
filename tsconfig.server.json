@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES2020",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "sourceMap": false,
     "keyofStringsOnly": false,
@@ -10,8 +10,6 @@
     "alwaysStrict": false,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "tsx-dom",
     "noEmit": false,
     "noEmitOnError": false,
     "noImplicitAny": true,
@@ -20,7 +18,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "outDir": "./.build",
+    "outDir": ".",
     "suppressImplicitAnyIndexErrors": false,
     "strictNullChecks": true,
     "strictBindCallApply": true,
@@ -29,16 +27,11 @@
   },
   "compileOnSave": true,
   "include": [
-    "**/*.ts",
-    "components/inner.tsx",
-    "components/my-app.tsx",
-    "components/navbar.tsx",
-    "components/veggie-form.tsx",
-  ],
-  "exclude": [
-    "server.mts",
     "server.ts",
     "server.cts",
+    "server.mts"
+  ],
+  "exclude": [
     "node_modules"
   ]
 }

@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "serve": "node server.js",
-    "servets": "tsc servercopy.ts &&  node servercopy.js"
+    "serve": "tsc --project tsconfig.server.json && node server.cjs"
   },
   "devDependencies": {
     "typescript": "^4.8.4",
