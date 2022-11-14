@@ -5,7 +5,7 @@ export default function () {
   const mustBeOpt2 = (val: string) => (val || "").includes("2");
 
   return (
-    <>
+    <div>
       <div mustBeAnimal mustBeMineral mustBeVegetable mustBeRacecar>
         <label>Name it:<br /><input type="text" /></label> 
         <div for="mustBeAnimal">Animals have an 'a' in their name</div>
@@ -84,6 +84,6 @@ export default function () {
           display: block;
         }
       </style>
-    </>
+    </div>
   );
 }

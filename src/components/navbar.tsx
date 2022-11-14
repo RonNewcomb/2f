@@ -1,4 +1,8 @@
-import type { EventHandler } from "src/uif";
+// export interface EventHandler {
+//   (ev: Event, el: Element): void;
+// }
+
+import type { EventHandler } from "tsx-dom-types";
 
 export default function () {
   let title: string = "I'm a member of a navbar class";
@@ -23,25 +27,27 @@ export default function () {
     return `hello ${str} youre #${i}!`;
   };
 
-  const onClickMe: EventHandler = (ev, el) => (title = "onClickMe") && console.log("onClickMe", ev, el);
+  const onClickMe: EventHandler<HTMLElement, MouseEvent> = ev => (title = "onClickMe") && console.log("onClickMe", ev);
 
   const onClickopen = () => (title = "onclickOpen") && console.log(title);
 
-  return <><ul className="back">
-    <li onClick={event=>open(1, event, this)}>menu item 1 - {hello(4, "world")}</li>
-    <li onclick2="(2)">menu item 2 - click me and inspect console</li>
-    <li onClick={onclickopen}>menu item 3: {title}</li>
-    <li onClick={onClickMe}>Test the onClick handler</li>
-    <li>{hello(5, "world")}</li>
-</ul>
-<style>
-.back{
-    background-color: lightblue;
-}
-
-li[onClick]:hover {
-  text-decoration: underline;
-}
-</style></>  
-;
+  return (
+    <div>
+      <ul class="back">
+        {/* <li onClick={event=>open(1, event, this)}>menu item 1 - {hello(4, "world")}</li>
+        <li onclick2="(2)">menu item 2 - click me and inspect console</li>
+        <li onClick={onclickopen}>menu item 3: {title}</li> */}
+        <li onClick={onClickMe}>Test the onClick handler</li>
+        <li>{hello(5, "world")}</li>
+      </ul>
+      {/* <style>
+        .back{
+            background-color: lightblue;
+        }
+        li[onClick]:hover {
+          text-decoration: underline;
+        }
+      </style> */}
+    </div>
+  );
 }

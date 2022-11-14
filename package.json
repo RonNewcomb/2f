@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
+    "roll": "rollup .build/app.js --file .build/bundle.js --format iife --watch",
     "serve": "cd server && tsc --project tsconfig.server.json && node server.cjs"
   },
   "dependencies": {

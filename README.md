@@ -47,3 +47,7 @@ It's already compiled from individual ts files to individual js files, using req
 ## assets
 
 added ability for the server to enumerate all files in an assets folder, and if the requested file matches then it serves that. Solves index.html not being needed to be moved (until we need substitutions in index.html), solves images (and css?) when it comes up. Doesn't solve npm modules.
+
+## rollup.js
+
+`npm install rollup --production` adds only 2 dependencies.

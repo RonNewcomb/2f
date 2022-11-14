@@ -11,7 +11,7 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "tsx-dom",
+    "jsxImportSource": "src/jsx",
     "noEmit": false,
     "noEmitOnError": false,
     "noImplicitAny": true,
@@ -30,11 +30,8 @@
   },
   "compileOnSave": true,
   "include": [
-    "**/*.ts",
-    "src/components/inner-.tsx",
-    "src/components/my-app.tsx",
-    "src/components/navbar.tsx",
-    "src/components/veggie-form.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
   ],
   "exclude": [
     "server.mts",
