@@ -11,7 +11,7 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "src/jsx",
+    "jsxImportSource": "src",
     "noEmit": false,
     "noEmitOnError": false,
     "noImplicitAny": true,
