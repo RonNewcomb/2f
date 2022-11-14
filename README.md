@@ -36,10 +36,14 @@ Either my build process needs bundling and/or my server needs to somehow push ex
 
 ..isn't copied to .build folder. Typescript doesn't do that. Server could, at startup. Or, a separate nodejs script that isn't the server can do these little build steps.
 
-## jsx-runtime
+## sending npm modules
 
 I gave my server the ability to translate known npm packages to a folder/file in node_modules. Kinda hack tho since those should really be moved to the .build folder. But that requires crawling all files known to be used by the project...
 
 The jsx() and jsxs() functions in the jsx-runtime is about as simple as you'd expect, but, it's written to be put together by a bundler, server-side, not to be sent as-is to a browser.
 
 It's already compiled from individual ts files to individual js files, using require() and the like. But no further.
+
+## assets
+
+added ability for the server to enumerate all files in an assets folder, and if the requested file matches then it serves that. Solves index.html not being needed to be moved (until we need substitutions in index.html), solves images (and css?) when it comes up. Doesn't solve npm modules.

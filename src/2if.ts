@@ -1,3 +1,68 @@
+/// import all of tsx-dom
+
+function transferKnownProperties(source: Record<string, any>, target: Record<string, any>): void {
+  for (const key of Object.keys(source)) {
+    if (key in target) target[key] = source[key];
+  }
+}
+
+function setAttributes(element: Element, attrs: Record<string, any>): void {
+  for (const name of Object.keys(attrs)) {
+    const value = attrs[name];
+    if (name.startsWith("on")) {
+      const finalName = name.replace(/Capture$/, "");
+      const useCapture = name !== finalName;
+      const eventName = finalName.toLowerCase().substring(2);
+      element.addEventListener(eventName, value, useCapture);
+    } else if (name === "style" && typeof value !== "string") {
+      // Special handler for style with a value of type CSSStyleDeclaration
+      transferKnownProperties(value, element.style);
+    } else if (name === "dangerouslySetInnerHTML") element.innerHTML = value;
+    else if (value === true) element.setAttribute(name, name);
+    else if (value || value === 0) element.setAttribute(name, value.toString());
+  }
+}
+
+function applyChild(element: Element, child: Element | string): void {
+  if (child instanceof Element) element.appendChild(child);
+  else if (typeof child === "string" || typeof child === "number") element.appendChild(document.createTextNode(child.toString()));
+  else console.warn("Unknown type to append: ", child);
+}
+function applyChildren(element: Element, children: any[]): void {
+  for (const child of children) {
+    if (!child && child !== 0) continue;
+    if (Array.isArray(child)) applyChildren(element, child);
+    else applyChild(element, child);
+  }
+}
+
+function createDomElement(tag: string, attrs: Record<string, any>) {
+  const options = (attrs === null || attrs === void 0 ? void 0 : attrs.is) ? { is: attrs.is } : undefined;
+  if (attrs === null || attrs === void 0 ? void 0 : attrs.xmlns) return document.createElementNS(attrs.xmlns, tag, options);
+  return document.createElement(tag, options);
+}
+
+function jsx(tag: Function, props: Record<string, any>): Element {
+  if (typeof tag === "function") return tag(props);
+  const { children, ...attrs } = props;
+  const element = createDomElement(tag, attrs);
+  if (attrs) setAttributes(element, attrs);
+  applyChildren(element, [children]);
+  return element;
+}
+
+function createElement(tag: Function | string, attrs: Record<string, any>, ...children: any[]): Element {
+  if (typeof tag === "function") return tag({ ...attrs, children });
+  const element = createDomElement(tag, attrs);
+  if (attrs) setAttributes(element, attrs);
+  applyChildren(element, children);
+  return element;
+}
+
+const foodiv = createElement("div", {});
+
+///////
+
 interface TagName extends String {}
 
 interface RenderedComponent {}
